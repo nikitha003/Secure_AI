@@ -1,3 +1,5 @@
+//This program will detect people in a frame and will put a bounding box around them.
+//This program can read images and will later enhanced to include video as well
 #include <iostream>
 #include <opencv2/opencv.hpp>
 
@@ -6,9 +8,12 @@ using namespace cv;
 
 int main (int argc, const char * argv[])
 {
-    Mat img = imread(argv[1]);
+    Mat img = imread(argv[1]); //Storing the image in a matrix datadype MAT
     if( img.empty())
         return -1;
+
+    //Printing the matrix just to see what it contains.
+    cout << "The matrix of the image is: " << img << endl;
 
     HOGDescriptor hog;
     hog.setSVMDetector( HOGDescriptor::getDefaultPeopleDetector() );
