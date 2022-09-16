@@ -15,6 +15,19 @@ int main (int argc, const char * argv[])
 
     VideoCapture cap(input_file); //For capturing video if the input is a video file
 
+    if(!cap.isOpened()){
+	    cout << "Error reading the video input" << endl;}
+
+    while(1){Mat frame;
+	    cap >> frame;
+	    if(frame.empty()) break;
+	    imshow("Frame", frame);
+	    char c = (char)waitKey(1000);
+	    if(c == 27) break;}
+
+
+
+
     Mat img = imread(input_file); //Storing the image in a matrix datadype MAT
     if( img.empty())
         return -1;
