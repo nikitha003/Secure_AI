@@ -9,6 +9,7 @@ using namespace cv;
 int main (int argc, const char * argv[])
 {
     char debug = 1; //No debug if debug is 0
+    int frame_number = 0;
 
     cout << "The input file is: " << argv[1] << endl;
     String input_file = argv[1];
@@ -21,8 +22,20 @@ int main (int argc, const char * argv[])
     while(1){Mat frame;
 	    cap >> frame;
 	    if(frame.empty()) break;
+	    frame_number++;
+	    //if(debug == 1) cout << "Frame Number: " << frame_number << "/r/n";
+	    HOGDescriptor hog;
+	    hog.setSVMDetector(HOGDescriptor::getDefaultPeopleDetector() );
+	    vector<Rect> rects;
+            copyMakeBorder(frame, frame,50,50,50,50,0);
+	    hog.detectMultiScale(frame, rects, 0, Size(8,8), Size(32,32), 1.05, 2); 
+            size_t i;
+            for(i = 0; i < rects.size(); i++){
+                  rectangle(frame, rects[i], cv::Scalar(0,255,0), 2);
+	          cout << "Frame Number: " << frame_number << endl;}
+
 	    imshow("Frame", frame);
-	    char c = (char)waitKey(1000);
+	    char c = (char)waitKey(1);
 	    if(c == 27) break;}
 
 
